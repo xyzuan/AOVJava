@@ -5,24 +5,26 @@ import id.xyzprjkt.AOVJava.Hero;
 public abstract class Tank extends Hero {
 
     // Declaring Hero Specifications and Ability
-    double healthPoint = 2500, defense = 200, attackDamage = 700;
-    double upHealthPoint = 200, upDefense = 15, upAttackDamage = 20;
+    public double healthPoint = 2500, defense = 200, attackDamage = 700;
+    public final double upHealthPoint = 200, upDefense = 15, upAttackDamage = 20;
+
+    // Recent Status
+    public double HP;
 
     @Override
-    public void setHealthPoint(double healthPoint) {
-        healthPoint = this.healthPoint;
-        super.setHealthPoint(healthPoint);
+    public void initHero(){
+        setHealthPoint(healthPoint);
+        setDefense(defense);
+        setAttackDamage(attackDamage);
     }
 
     @Override
-    public void setDefense(double defense) {
-        defense = this.defense;
-        super.setDefense(defense);
-    }
-
-    @Override
-    public void setAttackDamage(double attackDamage) {
-        attackDamage = this.attackDamage;
-        super.setAttackDamage(attackDamage);
+    public void upLevel(int level){
+        setLevel(level);
+        for (int tempLevel = 1; tempLevel < level; tempLevel++) {
+            setAttackDamage(getAttackDamage() + upAttackDamage);
+            setDefense(getDefense() + upDefense);
+            setHealthPoint(getHealthPoint() + upHealthPoint);
+        }
     }
 }

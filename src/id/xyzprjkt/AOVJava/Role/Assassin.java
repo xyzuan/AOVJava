@@ -9,30 +9,26 @@ interface CriticalDamage {
 public abstract class Assassin extends Hero implements CriticalDamage {
 
     // Declaring Hero Specifications and Ability
-    double healthPoint = 3000, defense = 300, attackDamage = 800;
-    double upHealthPoint = 90, upDefense = 15, upAttackDamage = 30;
+    public double healthPoint = 3000, defense = 300, attackDamage = 800;
+    public final double upHealthPoint = 90, upDefense = 15, upAttackDamage = 30;
 
-    // Special Assassin Specifications
-    public void critDmg() {
-        attackDamage += attackDamage * bonusDamage;
-    }
-
-    // Basic Assasin Specifications
     @Override
-    public void setHealthPoint(double healthPoint) {
-        healthPoint = this.healthPoint;
-        super.setHealthPoint(healthPoint);
+    public void initHero(){
+        setHealthPoint(healthPoint);
+        setDefense(defense);
+        setAttackDamage(attackDamage);
     }
 
     @Override
-    public void setDefense(double defense) {
-        defense = this.defense;
-        super.setDefense(defense);
-    }
-
-    @Override
-    public void setAttackDamage(double attackDamage) {
-        attackDamage = this.attackDamage;
-        super.setAttackDamage(attackDamage);
+    public void upLevel(int level){
+        setLevel(level);
+        for (int tempLevel = 1; tempLevel < level; tempLevel++) {
+            setAttackDamage(getAttackDamage() + upAttackDamage);
+            setDefense(getDefense() + upDefense);
+            setHealthPoint(getHealthPoint() + upHealthPoint);
+        }
+        this.attackDamage = getAttackDamage();
+        this.defense = getDefense();
+        this.healthPoint = getHealthPoint();
     }
 }
