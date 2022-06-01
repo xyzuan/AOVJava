@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2022 xyzuan ( Jody Yuantoro )
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package id.xyzprjkt.AOVJava;
 
 import id.xyzprjkt.AOVJava.Heroes.*;
@@ -14,42 +30,47 @@ public class playMe {
         MURADVSMGANGA, // or MGANGAVSMURAD
         THANEVSMGANGA, // or MGANGAVSTHANE
     }
-    static int p1_hero, p2_hero;
+    static int h1_hero, h2_hero;
     static int p1_hero_lvl, p2_hero_lvl;
+
+    // Enum PvP Possbile Case Variable
+    static pvpCase pvp = null;
+
+    // Object Instance Variable
+    static Murad murad = new Murad();
+    static Thane thane = new Thane();
+    static Mganga mganga = new Mganga();
 
     public static void pickHero(){
 
         Scanner input = new Scanner(System.in);
 
-        System.out.println("Pilih Hero \n1. Murad\n2. Thane\n3. Mganga");
-        System.out.print("Player - 1 : ");
-        p1_hero = input.nextInt();
-        System.out.print("Player - 1 Hero Level : ");
+        System.out.println("""
+                 Pick a Hero\s
+                 1. Murad
+                 2. Thane
+                 3. Mganga
+                ========================================""");
+        System.out.print("Hero 1 : ");
+        h1_hero = input.nextInt();
+        System.out.print("Hero 1 Level : ");
         p1_hero_lvl = input.nextInt();
-        System.out.print("Player - 2 : ");
-        p2_hero = input.nextInt();
-        System.out.print("Player - 2 Hero Level : ");
+        System.out.print("Hero 2 : ");
+        h2_hero = input.nextInt();
+        System.out.print("Hero 2 Level : ");
         p2_hero_lvl = input.nextInt();
 
     }
 
     public static void gameEngine() {
 
-        // Object Instance Variable
-        Murad murad = new Murad();
-        Thane thane = new Thane();
-        Mganga mganga = new Mganga();
-
-        // Enum PvP Possbile Case Variable
-        pvpCase pvp = null;
-
         // General Instance Variable
         int round = 0;
 
         // Main Game Engine
         System.out.println("\n=========== Battle Start ===========");
-        if (p1_hero == 1 && p2_hero == 2 ||
-            p1_hero == 2 && p2_hero == 1 ) {
+        if (h1_hero == 1 && h2_hero == 2 ||
+            h1_hero == 2 && h2_hero == 1 ) {
 
             pvp = pvpCase.MURADVSTHANE;
 
@@ -91,8 +112,9 @@ public class playMe {
                 }
 
             } while (murad.isLifeStatus() && thane.isLifeStatus());
-        } else if (p1_hero == 1 && p2_hero == 3 ||
-                   p1_hero == 3 && p2_hero == 1 ) {
+            matchResult();
+        } else if (h1_hero == 1 && h2_hero == 3 ||
+                   h1_hero == 3 && h2_hero == 1 ) {
 
             pvp = pvpCase.MURADVSMGANGA;
 
@@ -133,8 +155,9 @@ public class playMe {
                     }
                 }
             } while (murad.isLifeStatus() && mganga.isLifeStatus());
-        } else if (p1_hero == 2 && p2_hero == 3 ||
-                   p1_hero == 3 && p2_hero == 2 ) {
+            matchResult();
+        } else if (h1_hero == 2 && h2_hero == 3 ||
+                   h1_hero == 3 && h2_hero == 2 ) {
 
             pvp = pvpCase.THANEVSMGANGA;
 
@@ -176,8 +199,13 @@ public class playMe {
                     }
                 }
             } while (thane.isLifeStatus() && mganga.isLifeStatus());
+            matchResult();
+        } else {
+            System.out.println("[id.xyzprjkt.AOVJava] PvP Cases are not eligible");
         }
+    }
 
+    public static void matchResult() {
         // Match Result
         System.out.println("\n========= Match Result =========");
         if (pvp == pvpCase.MURADVSTHANE) {
@@ -199,10 +227,15 @@ public class playMe {
                 System.out.println("Mganga died in the Game\nThane Win the Game");
             }
         }
-        System.out.println("================================");
     }
+
     public static void main(String[] args) {
-        System.out.println("\nWelcome to, Arena Of Valor\nJava Edition");
+        System.out.println("""
+                ========================================          \s
+                 Welcome to, Arena Of Valor
+                 Java Edition
+                 Made by xyzuan
+                ========================================""");
         pickHero(); gameEngine();
     }
 }
