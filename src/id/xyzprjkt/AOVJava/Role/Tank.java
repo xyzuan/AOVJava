@@ -8,9 +8,6 @@ public abstract class Tank extends Hero {
     public double healthPoint = 2500, defense = 200, attackDamage = 700;
     public final double upHealthPoint = 200, upDefense = 15, upAttackDamage = 20;
 
-    // Recent Status
-    public double HP;
-
     @Override
     public void initHero(){
         setHealthPoint(healthPoint);

@@ -2,13 +2,10 @@ package id.xyzprjkt.AOVJava;
 
 public abstract class Hero {
 
-    private double healthPoint;
-    private double attackDamage;
-    private double realDamage;
-    private double defense;
+    private double healthPoint, attackDamage, realDamage, defense;
     private int level = 1;
     private boolean lifeStatus = true;
-    public double damageKontol;
+    public double finalHealth;
 
     public void attack (
         // Hero Name Params
@@ -22,8 +19,11 @@ public abstract class Hero {
 
         System.out.printf("\n=== %s Turn ===\n", p1_name); spawnIntro();
         reviewDamage(p1_attackDamage, p2_defense);
-        damageKontol = p2_health - getRealDamage();
-        System.out.printf("%s HP Remaining : %.1f\n", p2_name, damageKontol);
+        finalHealth = p2_health - getRealDamage();
+        if (finalHealth >= 0){
+            finalHealth = finalHealth;
+        } else finalHealth = 0;
+        System.out.printf("%s HP Remaining : %.1f\n", p2_name, finalHealth);
     }
 
     public abstract void initHero();
