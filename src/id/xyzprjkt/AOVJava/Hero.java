@@ -18,12 +18,12 @@ package id.xyzprjkt.AOVJava;
 
 public abstract class Hero {
 
-    private double healthPoint, attackDamage, realDamage, defense;
+    private double healthPoint, attackDamage, realDamage, damageTaken, defense;
     private int level = 1;
     private boolean lifeStatus = true;
-    public double finalHealth;
 
     public void attack (
+
         // Hero Name Params
         String p1_name, String p2_name,
 
@@ -33,16 +33,23 @@ public abstract class Hero {
         // Health Target Params
         double p2_health){
 
+        // Main Attack Function
         System.out.printf("\n=== %s Turn ===\n", p1_name); spawnIntro();
         reviewDamage(p1_attackDamage, p2_defense);
-        finalHealth = p2_health - getRealDamage();
-        if (finalHealth >= 0){
-            finalHealth = finalHealth;
-        } else finalHealth = 0;
-        System.out.printf("%s HP Remaining : %.1f\n", p2_name, finalHealth);
+        setDamageTaken(p2_health - getRealDamage());
+
+        // Avoid Killed Hero to have Negative Health Point
+        if (getDamageTaken() <= 0){
+            setDamageTaken(0);
+        }
+
+        // Damage & HP Information
+        System.out.printf("%s Real Damage\t: %.1f ATK\n", p1_name, getRealDamage());
+        System.out.printf("%s HP Remaining\t: %.1f HP\n", p2_name, getDamageTaken());
+
     }
 
-    public abstract void initHero();
+    public abstract void summonHero(int upLevel);
     public void reviewDamage(double attackDamage, double defense){
         setRealDamage(attackDamage - defense);
     }
@@ -54,8 +61,6 @@ public abstract class Hero {
                            getAttackDamage(), isLifeStatus(), getHealthPoint(), getDefense());
     }
     public abstract void spawnIntro();
-
-    public abstract void upLevel(int level);
 
     // Setter Getter
     public double getHealthPoint() {
@@ -104,5 +109,13 @@ public abstract class Hero {
 
     public void setRealDamage(double realDamage) {
         this.realDamage = realDamage;
+    }
+
+    public double getDamageTaken() {
+        return damageTaken;
+    }
+
+    public void setDamageTaken(double damageTaken) {
+        this.damageTaken = damageTaken;
     }
 }

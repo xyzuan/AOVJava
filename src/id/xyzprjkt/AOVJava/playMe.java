@@ -16,32 +16,35 @@
 
 package id.xyzprjkt.AOVJava;
 
-import id.xyzprjkt.AOVJava.Heroes.*;
-
 import java.util.Scanner;
+
+/*  AOV Heroes
+    ( Murad, Thane, Mganga )
+*/
+import id.xyzprjkt.AOVJava.Heroes.*;
 
 public class playMe {
 
     /*  This Enums are possible case where PvP
         are happens
     */
-    enum pvpCase {
+    private enum pvpCase {
         MURADVSTHANE, // or THANEVSMURAD
         MURADVSMGANGA, // or MGANGAVSMURAD
         THANEVSMGANGA, // or MGANGAVSTHANE
     }
-    static int h1_hero, h2_hero;
-    static int p1_hero_lvl, p2_hero_lvl;
+    private static int h1_hero, h2_hero;
+    private static int h1_hero_lvl, h2_hero_lvl;
 
-    // Enum PvP Possbile Case Variable
-    static pvpCase pvp = null;
+    // Enum PvP Possible Case Variable
+    private static pvpCase pvp;
 
     // Object Instance Variable
-    static Murad murad = new Murad();
-    static Thane thane = new Thane();
-    static Mganga mganga = new Mganga();
+    private final static Murad murad = new Murad();
+    private final static Thane thane = new Thane();
+    private final static Mganga mganga = new Mganga();
 
-    public static void pickHero(){
+    private static void pickHero(){
 
         Scanner input = new Scanner(System.in);
 
@@ -51,20 +54,22 @@ public class playMe {
                  2. Thane
                  3. Mganga
                 ========================================""");
-        System.out.print("Hero 1 : ");
-        h1_hero = input.nextInt();
-        System.out.print("Hero 1 Level : ");
-        p1_hero_lvl = input.nextInt();
-        System.out.print("Hero 2 : ");
-        h2_hero = input.nextInt();
-        System.out.print("Hero 2 Level : ");
-        p2_hero_lvl = input.nextInt();
+
+        // Initialization Hero 1
+        System.out.print("Hero 1 : "); h1_hero = input.nextInt();
+        System.out.print("Hero 1 Level : "); h1_hero_lvl = input.nextInt();
+
+        // Initialization Hero 2
+        System.out.print("Hero 2 : "); h2_hero = input.nextInt();
+        System.out.print("Hero 2 Level : "); h2_hero_lvl = input.nextInt();
+
+        input.close();
 
     }
 
-    public static void gameEngine() {
+    private static void initGameEngine() {
 
-        // General Instance Variable
+        // General gameEngine Variable
         int round = 0;
 
         // Main Game Engine
@@ -75,11 +80,11 @@ public class playMe {
             pvp = pvpCase.MURADVSTHANE;
 
             // Initialization Murad Basic Status
-            murad.initHero(); murad.upLevel(p1_hero_lvl);
+            murad.summonHero(h1_hero_lvl);
             murad.checkStatus("Murad");
 
             // Initialization Thane Basic Status
-            thane.initHero(); thane.upLevel(p2_hero_lvl);
+            thane.summonHero(h2_hero_lvl);
             thane.checkStatus("Thane");
 
             // PvP Drivers
@@ -92,7 +97,7 @@ public class playMe {
                     murad.attack("Murad", "Thane",
                             murad.getAttackDamage(), thane.getDefense(),
                             thane.getHealthPoint());
-                    thane.setHealthPoint(murad.finalHealth);
+                    thane.setHealthPoint(murad.getDamageTaken());
 
                     if (thane.getHealthPoint() <= 0) {
                         thane.setLifeStatus(false);
@@ -104,7 +109,7 @@ public class playMe {
                     thane.attack("Thane", "Murad",
                             thane.getAttackDamage(), murad.getDefense(),
                             murad.getHealthPoint());
-                    murad.setHealthPoint(thane.finalHealth);
+                    murad.setHealthPoint(thane.getDamageTaken());
 
                     if (murad.getHealthPoint() <= 0) {
                         murad.setLifeStatus(false);
@@ -119,11 +124,11 @@ public class playMe {
             pvp = pvpCase.MURADVSMGANGA;
 
             // Initialization Murad Basic Status
-            murad.initHero(); murad.upLevel(p1_hero_lvl);
+            murad.summonHero(h1_hero_lvl);
             murad.checkStatus("Murad");
 
             // Initialization Mganga Basic Status
-            mganga.initHero(); mganga.upLevel(p2_hero_lvl);
+            mganga.summonHero(h2_hero_lvl);
             mganga.checkStatus("Mganga");
 
             // PvP Drivers
@@ -136,7 +141,7 @@ public class playMe {
                     murad.attack("Murad", "Mganga",
                             murad.getAttackDamage(), thane.getDefense(),
                             mganga.getHealthPoint());
-                    mganga.setHealthPoint(murad.finalHealth);
+                    mganga.setHealthPoint(murad.getDamageTaken());
 
                     if (mganga.getHealthPoint() <= 0) {
                         mganga.setLifeStatus(false);
@@ -148,7 +153,7 @@ public class playMe {
                     mganga.attack("Mganga", "Murad",
                             mganga.getAttackDamage(), murad.getDefense(),
                             murad.getHealthPoint());
-                    murad.setHealthPoint(mganga.finalHealth);
+                    murad.setHealthPoint(mganga.getDamageTaken());
 
                     if (murad.getHealthPoint() <= 0) {
                         murad.setLifeStatus(false);
@@ -162,12 +167,11 @@ public class playMe {
             pvp = pvpCase.THANEVSMGANGA;
 
             // Initialization Thane Basic Status
-            thane.initHero(); thane.upLevel(p1_hero_lvl);
+            thane.summonHero(h1_hero_lvl);
             thane.checkStatus("Thane");
 
             // Initialization Mganga Basic Status
-            mganga.initHero();
-            mganga.upLevel(p2_hero_lvl);
+            mganga.summonHero(h2_hero_lvl);
             mganga.checkStatus("Mganga");
 
             // PvP Drivers
@@ -180,7 +184,7 @@ public class playMe {
                     thane.attack("thane", "Mganga",
                             thane.getAttackDamage(), thane.getDefense(),
                             mganga.getHealthPoint());
-                    mganga.setHealthPoint(thane.finalHealth);
+                    mganga.setHealthPoint(thane.getDamageTaken());
 
                     if (mganga.getHealthPoint() <= 0) {
                         mganga.setLifeStatus(false);
@@ -192,7 +196,7 @@ public class playMe {
                     mganga.attack("Mganga", "thane",
                             mganga.getAttackDamage(), thane.getDefense(),
                             thane.getHealthPoint());
-                    thane.setHealthPoint(mganga.finalHealth);
+                    thane.setHealthPoint(mganga.getDamageTaken());
 
                     if (thane.getHealthPoint() <= 0) {
                         thane.setLifeStatus(false);
@@ -200,8 +204,12 @@ public class playMe {
                 }
             } while (thane.isLifeStatus() && mganga.isLifeStatus());
             matchResult();
-        } else {
-            System.out.println("[id.xyzprjkt.AOVJava] PvP Cases are not eligible");
+        } else if (h1_hero == h2_hero) {
+            System.out.println("[id.xyzprjkt.AOVJava] You can't pick same hero in Hero 1 or 2");
+        } else if (h1_hero > 3){
+            System.out.println("[id.xyzprjkt.AOVJava] Hero 1 are not listed");
+        } else if (h2_hero > 3) {
+            System.out.println("[id.xyzprjkt.AOVJava] Hero 2 are not listed");
         }
     }
 
@@ -227,6 +235,7 @@ public class playMe {
                 System.out.println("Mganga died in the Game\nThane Win the Game");
             }
         }
+        System.out.println("================================");
     }
 
     public static void main(String[] args) {
@@ -236,6 +245,11 @@ public class playMe {
                  Java Edition
                  Made by xyzuan
                 ========================================""");
-        pickHero(); gameEngine();
+        pickHero();
+        if (h1_hero_lvl > 15 || h2_hero_lvl > 15){
+            System.out.println("[id.xyzprjkt.AOVJava] You can't set hero level up to 15 LVL");
+        } else {
+            initGameEngine();
+        }
     }
 }
