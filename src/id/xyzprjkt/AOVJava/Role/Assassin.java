@@ -37,7 +37,7 @@ public abstract class Assassin extends Hero implements CriticalDamage {
 
         // Leveling Up Hero Specifications
         final double upHealthPoint = 90, upDefense = 15, upAttackDamage = 30;
-        for (int tempLevel = 1; tempLevel < upLevel; tempLevel++) {
+        for (int tempLevel = 0; tempLevel < upLevel; tempLevel++) {
             setHealthPoint(getHealthPoint() + upHealthPoint);
             setDefense(getDefense() + upDefense);
             setAttackDamage(getAttackDamage() + upAttackDamage);

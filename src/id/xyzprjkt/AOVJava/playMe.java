@@ -40,10 +40,9 @@ public class playMe {
     private static pvpCase pvp;
 
     // Object Instance Variable
-    private final static Murad murad = new Murad();
-    private final static Thane thane = new Thane();
-    private final static Mganga mganga = new Mganga();
-
+    private static final Hero murad = new Murad();
+    private static final Hero thane = new Thane();
+    private static final Hero mganga = new Mganga();
     private static void pickHero(){
 
         Scanner input = new Scanner(System.in);
@@ -94,9 +93,7 @@ public class playMe {
 
                 // Murad Attack
                 if (murad.isLifeStatus()) {
-                    murad.attack("Murad", "Thane",
-                            murad.getAttackDamage(), thane.getDefense(),
-                            thane.getHealthPoint());
+                    murad.attack("Murad", murad, "Thane", thane);
                     thane.setHealthPoint(murad.getDamageTaken());
 
                     if (thane.getHealthPoint() <= 0) {
@@ -106,9 +103,7 @@ public class playMe {
 
                 // Thane Attack
                 if (thane.isLifeStatus()) {
-                    thane.attack("Thane", "Murad",
-                            thane.getAttackDamage(), murad.getDefense(),
-                            murad.getHealthPoint());
+                    thane.attack("Thane", thane, "Murad", murad);
                     murad.setHealthPoint(thane.getDamageTaken());
 
                     if (murad.getHealthPoint() <= 0) {
@@ -138,9 +133,7 @@ public class playMe {
 
                 // Murad Attack
                 if (murad.isLifeStatus()) {
-                    murad.attack("Murad", "Mganga",
-                            murad.getAttackDamage(), thane.getDefense(),
-                            mganga.getHealthPoint());
+                    murad.attack("Murad", murad, "Mganga", mganga);
                     mganga.setHealthPoint(murad.getDamageTaken());
 
                     if (mganga.getHealthPoint() <= 0) {
@@ -150,9 +143,7 @@ public class playMe {
 
                 // Mganga Attack
                 if (mganga.isLifeStatus()) {
-                    mganga.attack("Mganga", "Murad",
-                            mganga.getAttackDamage(), murad.getDefense(),
-                            murad.getHealthPoint());
+                    mganga.attack("Mganga", mganga, "Murad", murad);
                     murad.setHealthPoint(mganga.getDamageTaken());
 
                     if (murad.getHealthPoint() <= 0) {
@@ -181,9 +172,7 @@ public class playMe {
 
                 // Thane Attack
                 if (thane.isLifeStatus()) {
-                    thane.attack("thane", "Mganga",
-                            thane.getAttackDamage(), thane.getDefense(),
-                            mganga.getHealthPoint());
+                    thane.attack("Thane", thane, "Mganga", mganga);
                     mganga.setHealthPoint(thane.getDamageTaken());
 
                     if (mganga.getHealthPoint() <= 0) {
@@ -193,9 +182,7 @@ public class playMe {
 
                 // Mganga Attack
                 if (mganga.isLifeStatus()) {
-                    mganga.attack("Mganga", "thane",
-                            mganga.getAttackDamage(), thane.getDefense(),
-                            thane.getHealthPoint());
+                    mganga.attack("Mganga", mganga, "Thane", thane);
                     thane.setHealthPoint(mganga.getDamageTaken());
 
                     if (thane.getHealthPoint() <= 0) {
@@ -222,18 +209,21 @@ public class playMe {
             } else {
                 System.out.println("Murad died in the Game\nThane Win the Game");
             }
+            murad.checkStatus("Murad"); thane.checkStatus("Thane");
         } else if (pvp == pvpCase.MURADVSMGANGA) {
             if (!murad.isLifeStatus() && mganga.isLifeStatus()) {
                 System.out.println("Murad died in the Game\nMganga Win the Game");
             } else {
                 System.out.println("Mganga died in the Game\nMurad Win the Game");
             }
+            murad.checkStatus("Murad"); mganga.checkStatus("Mganga");
         } else if (pvp == pvpCase.THANEVSMGANGA) {
             if (!thane.isLifeStatus() && mganga.isLifeStatus()) {
                 System.out.println("Thane died in the Game\nMganga Win the Game");
             } else {
                 System.out.println("Mganga died in the Game\nThane Win the Game");
             }
+            thane.checkStatus("Thane"); mganga.checkStatus("Mganga");
         }
         System.out.println("================================");
     }

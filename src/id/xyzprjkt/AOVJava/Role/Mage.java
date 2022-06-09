@@ -36,7 +36,7 @@ public abstract class Mage extends Hero implements MagicalDamage {
 
         // Leveling Up Hero Specifications
         final double upHealthPoint = 85, upDefense = 10, upAttackDamage = 35;
-        for (int tempLevel = 1; tempLevel < upLevel; tempLevel++) {
+        for (int tempLevel = 0; tempLevel < upLevel; tempLevel++) {
             setHealthPoint(getHealthPoint() + upHealthPoint);
             setDefense(getDefense() + upDefense);
             setAttackDamage(getAttackDamage() + upAttackDamage);

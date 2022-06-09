@@ -22,31 +22,21 @@ public abstract class Hero {
     private int level = 1;
     private boolean lifeStatus = true;
 
-    public void attack (
 
-        // Hero Name Params
-        String p1_name, String p2_name,
-
-        // Calculate realDamage Params
-        double p1_attackDamage, double p2_defense,
-
-        // Health Target Params
-        double p2_health){
-
+    public void attack (String p1_name, Hero attacker, String p2_name, Hero target){
         // Main Attack Function
         System.out.printf("\n=== %s Turn ===\n", p1_name); spawnIntro();
-        reviewDamage(p1_attackDamage, p2_defense);
-        setDamageTaken(p2_health - getRealDamage());
+        reviewDamage(attacker.getAttackDamage(), target.getDefense());
+        setDamageTaken(target.getHealthPoint() - attacker.getRealDamage());
 
         // Avoid Killed Hero to have Negative Health Point
-        if (getDamageTaken() <= 0){
-            setDamageTaken(0);
+        if (attacker.getDamageTaken() <= 0){
+            attacker.setDamageTaken(0);
         }
 
         // Damage & HP Information
-        System.out.printf("%s Real Damage\t: %.1f ATK\n", p1_name, getRealDamage());
-        System.out.printf("%s HP Remaining\t: %.1f HP\n", p2_name, getDamageTaken());
-
+        System.out.printf("%s Real Damage\t: %.1f ATK\n", p1_name, attacker.getRealDamage());
+        System.out.printf("%s HP Remaining\t: %.1f HP\n", p2_name, attacker.getDamageTaken());
     }
 
     public abstract void summonHero(int upLevel);

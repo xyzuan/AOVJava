@@ -33,7 +33,7 @@ public abstract class Tank extends Hero {
 
         // Leveling Up Hero Specifications
         final double upHealthPoint = 200, upDefense = 15, upAttackDamage = 20;
-        for (int tempLevel = 1; tempLevel < upLevel; tempLevel++) {
+        for (int tempLevel = 0; tempLevel < upLevel; tempLevel++) {
             setHealthPoint(getHealthPoint() + upHealthPoint);
             setDefense(getDefense() + upDefense);
             setAttackDamage(getAttackDamage() + upAttackDamage);
